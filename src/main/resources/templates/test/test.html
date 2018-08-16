@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>接口测试</title>
+<meta http-equiv="charset" content="utf-8"/>
+</head>
+<body>
+<h2>接口测试</h2>
+<script type="text/javascript" src="/js/jquery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    var urlPrefix = 'http://127.0.0.1:8180';
+    var url = urlPrefix + '/module/homeJson';
+    var paramMap = {
+        "userID" : 65186825
+    };
+
+    $.ajax({
+        url : url,
+        data : paramMap,
+        method : 'GET',
+        dataType : 'JSON',
+        success : function(data) {
+            //json回调处理(data是文本，需要使用eval)
+            //var resObj = eval('('+$.trim(data)+')');
+            console.log(data.text);
+        },
+        error : function(data) {
+            console.log(data);
+        }
+    });
+
+    url = urlPrefix + '/module/saveJson';
+    paramMap = {
+        "id" : 1,
+        "name" : "小红",
+        "salary" : 2.0
+    };
+    $.ajax({
+        url : url,
+        data : paramMap,
+        method : 'POST',
+        dataType : 'JSON',
+        success : function(data) {
+            //json回调处理(data是文本，需要使用eval)
+            //var resObj = eval('('+$.trim(data)+')');
+            console.log(data.code);
+        },
+        error : function(data) {
+            console.log(data);
+        }
+    });
+</script>
+</body>
+</html>
