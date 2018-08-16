@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Boot 示例</title>
+<meta http-equiv="charset" content="utf-8"></meta>
+<link rel="stylesheet" th:href="@{/module/style.css}"></link>
+</head>
+<body>
+<h2>Spring Boot 示例</h2>
+<form action="/module/save" method="post">
+<label for="id">ID: </label><input type="text" name="id" value="0"/><br/>
+<label for="name">name: </label><input type="text" name="name" value="James"/><br/>
+<label for="salary">salary: </label><input type="text" name="salary" value="0.0"/><br/>
+<input type="submit" value="提交"/>
+</form>
+<ul th:each="contact : ${contacts}">
+<li>
+<span th:text="${contact.id}">id</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span th:text="${contact.name}">name</span>&nbsp;&nbsp;&nbsp;&nbsp;
+<span th:text="${contact.salary}">salary</span>
+</li>
+</ul>
+</body>
+</html>
