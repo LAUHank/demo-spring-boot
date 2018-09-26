@@ -14,7 +14,7 @@
         "userID" : 65186825
     };
 
-    $.ajax({
+    /*$.ajax({
         url : url,
         data : paramMap,
         method : 'GET',
@@ -27,9 +27,9 @@
         error : function(data) {
             console.log(data);
         }
-    });
+    });*/
 
-    url = urlPrefix + '/module/saveJson';
+    url = '/module/saveJson2';
     paramMap = {
         "id" : 1,
         "name" : "小红",
@@ -43,7 +43,7 @@
         success : function(data) {
             //json回调处理(data是文本，需要使用eval)
             //var resObj = eval('('+$.trim(data)+')');
-            console.log(data.code);
+            console.log(data);
         },
         error : function(data) {
             console.log(data);

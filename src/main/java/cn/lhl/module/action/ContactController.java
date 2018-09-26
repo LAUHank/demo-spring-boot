@@ -62,4 +62,11 @@ public class ContactController {
 		}
 		return res;
 	}
+
+	@RequestMapping(value = "/saveJson2", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")//, produces = "application/json;charset=UTF-8"
+	@ResponseBody
+	public JsonResponsePojo saveJson2(Contact contact) {
+		System.out.println(contact);
+		return new JsonResponsePojo(200, "OK正常", null);
+	}
 }
