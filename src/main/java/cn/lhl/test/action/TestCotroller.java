@@ -1,6 +1,8 @@
 package cn.lhl.test.action;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -129,5 +131,46 @@ public class TestCotroller {
 			return "test/failure";
 		}
 
+	}
+	
+	@RequestMapping(value = "/download")
+	public void download(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		// http://127.0.0.1:8180/test/download?prefixPath=D:/&savePath=/home/lhl/2019.doc&fileName=2019中文4.doc
+
+		String savePath = request.getParameter("savePath"); // 附件保存在服务器上的相对路径
+		savePath = (savePath == null ? "" : savePath.trim());
+		
+		String prefixPath = request.getParameter("prefixPath"); // 高哥给提供的前面部分, 现在没给, 先默认是 D:/ (Windows) 或者 / (Linux) 
+		prefixPath = (prefixPath == null ? "" : prefixPath.trim());
+		
+		String filePath = prefixPath + "/" + savePath; // 附件保存在服务器上的真实绝对路径
+		
+		String fileName = request.getParameter("fileName"); // 附件原来的中文名
+		fileName = (fileName == null ? "" : fileName.trim());
+
+		String agent = request.getHeader("User-Agent");
+		if (agent.contains("Firefox")) { // 火狐浏览器
+			fileName = "=?UTF-8?B?"
+					+ new BASE64Encoder().encode(fileName.getBytes("utf-8"))
+					+ "?=";
+		} else { // IE及其他浏览器
+			fileName = URLEncoder.encode(fileName, "utf-8");
+		}
+		// 告诉浏览器这是一个下载文件的servlet
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+
+		ServletOutputStream out = response.getOutputStream();
+
+		try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath))) {
+			byte[] b = new byte[bis.available()];
+			int len = -1;
+			while ((len = bis.read(b)) != -1) {
+				out.write(b, 0, len);
+			}
+		} catch (Exception e) {
+			LOGGER.error("异常", e);
+		}
 	}
 }
