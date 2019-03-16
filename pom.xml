@@ -10,6 +10,7 @@
 
 	<properties>
 		<java.version>1.7</java.version>
+		<argLine>-Dfile.encoding=UTF-8</argLine>
 	</properties>
 
 	<!-- 配置仓库的服务器位置, 首选阿里云, 也可以配置镜像方式, 效果雷同 -->
